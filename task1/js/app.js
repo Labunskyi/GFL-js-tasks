@@ -29,7 +29,7 @@ function Calculator(a, b){
 	}
 	
 	
-	this.res = functin () {
+	this.res = function () {
 		var a = this.add,
 		    b = this.sub,
 		    c = this.mul,
