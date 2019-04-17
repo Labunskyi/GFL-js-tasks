@@ -27,6 +27,16 @@ function Calculator(a, b){
 	this.dev = function () {
 		return this.a / this.b;
 	}
+	
+	
+	this.res = functin () {
+		var a = this.add,
+		    b = this.sub,
+		    c = this.mul,
+		    d = this.dev,
+		    str = a + " " + b + " " + c + " " + d;
+		return str;
+	}
 }
 
 var calc = new Calculator(2, 2);
