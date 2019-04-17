@@ -30,10 +30,10 @@ function Calculator(a, b){
 	
 	
 	this.res = function () {
-		var a = this.add,
-		    b = this.sub,
-		    c = this.mul,
-		    d = this.dev,
+		var a = this.add(),
+		    b = this.sub(),
+		    c = this.mul(),
+		    d = this.dev(),
 		    str = a + " " + b + " " + c + " " + d;
 		return str;
 	}
@@ -43,7 +43,4 @@ var calc = new Calculator(2, 2);
 
 
 calc.setValA(4);
-console.log(calc.add());
-console.log(calc.sub());
-console.log(calc.mul());
-console.log(calc.dev());
+console.log(calc.res());
