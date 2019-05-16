@@ -1,0 +1,10 @@
+<li>
+  <button (click)= "remove2()">X</button>
+  <button (click)= "reset2()">R</button>
+  <button (click)= "edit2()" *ngIf="show" >Edit</button>
+  <button (click)= "apply2()" *ngIf="!show" >Apply</button>
+  <span *ngIf="show"> {{ index }} - {{ item }} </span> 
+  <input type="text" [(ngModel)] = "item" *ngIf="!show">
+  
+  
+</li>
