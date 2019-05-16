@@ -1,0 +1,202 @@
+<!DOCTYPE html>
+<html>
+<head>
+<title>Компоненты Vue.js</title>
+<meta charset="utf-8" />
+</head>
+<body>
+<div id="app">
+    <calendar></calendar>
+    
+</div>
+<script src="https://unpkg.com/vue"></script>
+<script>
+Vue.component('calendar', {
+	data: function(){
+        return {
+            month: new Date().getMonth(),    
+			year: new Date().getFullYear(), 
+			days:['Пн',"Вт","Ср","Чт","Пт","Сб","Вс"],
+			monthes: ["Январь","Февраль","Март","Апрель","Май","Июнь","Июль","Август","Сентябрь","Октябрь","Ноябрь","Декабрь"],
+        }
+    },
+    template: `	<table >
+	<thead>
+    <tr>
+        <td>
+            <button v-on:click="decrease"><</button>
+        </td>
+        <td colspan="5"> {{monthes[month]}} {{year}} <td>
+            <button v-on:click="increase">></button>
+        </td>
+    </tr>
+    <tr >
+        <td v-for="(d,index) in days">{{d}}</td>
+    </tr>
+    </thead>
+    
+	<tbody>
+       
+       
+        <tr v-for="(a, k) in numWeek()" >
+          
+            <td  v-for="b in calendar(k)" :style="{'color': b.visible, 'background-color': b.current}"> {{ b.index + 1 }} </td>
+			
+        </tr>
+	
+	</tbody>
+	</table>`,
+	methods:{
+            calendar: function(numWeek){
+                var dfirst = new Date(this.year, this.month, 1).getDay();
+               
+                var dlast = new Date(this.year, this.month + 1, 0).getDate();
+				var dlastPrMonth = new Date(this.year, this.month, 0).getDate();
+				
+				console.log(new Date(this.year, this.month, 5).getDay());
+                var days = [];
+                if ( numWeek == 0 ) {
+					
+					if (dfirst != 0) {
+					endWeek1 =  8 - dfirst;
+					
+						for (var i = 0; i < endWeek1; i++) {
+							if (i == new Date().getDate() && this.year == new Date().getFullYear() && this.month == new Date().getMonth()) { a.current = 'blue'};
+							
+							a = {index: i, visible: ''};
+							days.push(a);
+							if (new Date(this.year, this.month, i).getDay() == 5 || new Date(this.year, this.month, i).getDay() == 6) { a.visible = 'red'};
+							
+							console.log(days);
+						}
+						for (var i = endWeek1; i < 7; i++) {
+							dlastPrMonth -=  1;
+							a = {index: dlastPrMonth, visible: 'grey'};
+							dlastPrMonth--;
+							days.unshift(a);
+						
+						}
+					} else {
+						endWeek1 =  1;
+						for (var i = 0; i < endWeek1; i++) {
+							if (i == new Date().getDate() && this.year == new Date().getFullYear() && this.month == new Date().getMonth()) { a.current = 'blue'}
+							a = {index: i, visible: ''};
+							days.push(a);
+							if (new Date(this.year, this.month, i).getDay() == 5 || new Date(this.year, this.month, i).getDay() == 6) { a.visible = 'red'};
+						}
+						for (var i = endWeek1; i < 7; i++) {	
+							dlastPrMonth -= 1;
+							a = {index: dlastPrMonth, visible: 'grey'};
+							dlastPrMonth--;
+							days.unshift(a);
+						}
+					
+					}
+					
+					
+				} else if ( numWeek == 1 ) {
+					start = endWeek1;
+					endWeek2 = start + 7;
+					for (var i = start; i < endWeek2; i++) {
+						if (i == new Date().getDate() && this.year == new Date().getFullYear() && this.month == new Date().getMonth()) { a.current = 'blue'}
+						a = {index: i, visible: ''};
+						days.push(a);
+						if (new Date(this.year, this.month, i).getDay() == 5 || new Date(this.year, this.month, i).getDay() == 6) { a.visible = 'red'};
+					}
+				
+				} else if ( numWeek == 2 ) {
+					start = endWeek2;
+					endWeek3 = start + 7;
+					for (var i = start; i < endWeek3; i++) {
+						if (i == new Date().getDate() && this.year == new Date().getFullYear() && this.month == new Date().getMonth()) { a.current = 'blue'}
+						if (new Date().getDay() == 0) { a.visible = 'red'};
+						a = {index: i, visible: ''};
+						
+						days.push(a);
+						if (new Date(this.year, this.month, i).getDay() == 5 || new Date(this.year, this.month, i).getDay() == 6) { a.visible = 'red'};
+					}
+				
+				} else if ( numWeek == 3 ) {
+					start = endWeek3;
+					endWeek4 = start + 7;
+					for (var i = start; i < endWeek4; i++) {
+						if (i == new Date().getDate() && this.year == new Date().getFullYear() && this.month == new Date().getMonth()) { a.current = 'blue'}
+						a = {index: i, visible: ''};
+						days.push(a);
+						if (new Date(this.year, this.month, i).getDay() == 5 || new Date(this.year, this.month, i).getDay() == 6) { a.visible = 'red'};
+					}
+				
+				} else if ( numWeek == 4 ) {
+					start = endWeek4;
+					endWeek5 = start + 7;
+					
+					for (var i = start; i < endWeek5; i++) {
+						if (i == new Date().getDate() && this.year == new Date().getFullYear() && this.month == new Date().getMonth()) { a.current = 'blue'}
+						a = {index: i, visible: ''};
+						if (i == dlast) break;
+						days.push(a);
+						if (new Date(this.year, this.month, i).getDay() == 5 || new Date(this.year, this.month, i).getDay() == 6) { a.visible = 'red'};
+					}
+					
+					k = days.length;
+					for (var i = 0; i < 7 - k; i++) {
+						a = {index: i, visible: 'grey'};
+						days.push(a)
+					}
+				
+				} else if ( numWeek == 5 ) {
+					start = endWeek5;
+					endWeek5 = start + 7;
+					for (var i = start; i < dlast; i++) {
+						if (i == new Date().getDate() && this.year == new Date().getFullYear() && this.month == new Date().getMonth()) { a.current = 'blue'}
+						a = {index: i, visible: ''};
+						days.push(a);
+						if (new Date(this.year, this.month, i).getDay() == 5 || new Date(this.year, this.month, i).getDay() == 6) { a.visible = 'red'};
+					}
+					
+					k = days.length;
+					for (var i = 0; i < 7 - k; i++) {
+						a = {index: i, visible: 'grey'};
+						days.push(a)
+					}
+				
+				} 
+				
+                console.log(days);
+                return days;
+                
+            },
+			numWeek() {
+				var l = new Date(this.year, this.month + 1, 0);
+				return Math.ceil((l.getDate() - (l.getDay() ? l.getDay() : 7)) / 7 ) + 1;
+			
+			},
+			
+            decrease: function(){
+
+                    this.month--;
+                    if (this.month < 0) {
+                        this.month = 12;
+                        this.month--;
+                        this.year--;
+                    }
+                    
+            },
+			increase: function(){
+
+                    this.month++;
+                    if (this.month > 11) {
+                        this.month = -1;
+                        this.month++;
+                        this.year++;
+                    }
+            }
+			
+        }
+});
+new Vue({
+    el: "#app"
+});
+</script>
+</body>
+</html>
