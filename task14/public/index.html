@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Express App</title>
+</head>
+<body>
+    <h1>Hello Express</h1>
+	
+	<input type="text" class="input_send">
+	<button class="btn_send">Send</button>
+	
+	<button class="btn_get">Get</button>
+	<div id="result"></div>
+	<ul id="ul"></ul>
+    <script>
+	
+		var inp_send = document.querySelector(".input_send"),
+			btn_send = document.querySelector(".btn_send");
+			btn_get = document.querySelector(".btn_get");
+		
+
+		btn_send.addEventListener('click', function(){
+			
+			fetch('/set_test', { 
+            method: 'POST', 
+            headers: {
+                'Accept': 'application/json',
+                'Content-Type': 'application/json'
+            },
+				body: JSON.stringify({value: inp_send.value})}
+			)
+			.then((res) => res.json())
+			.then((data) => {
+				console.log(data);
+			});
+			
+		
+		})
+			
+		btn_get.addEventListener('click', function() {
+			
+			
+			fetch('/test.json')
+			.then((res) => res.json())
+			// function(res) { return res.json() }
+			.then((data) => { 
+            console.log(data);
+			document.getElementById('result').innerHTML = data.arr;
+			
+			var newli = document.createElement('li');
+			
+			data.arr.forEach(function(item, i, arr) {
+			//var newli = document.createElement('li');
+			newli.innerHTML = item;
+			
+			ul.appendChild(newli);
+			
+			});
+			
+			
+        });
+		
+		});	
+        
+    </script>
+</body>
+</html>
