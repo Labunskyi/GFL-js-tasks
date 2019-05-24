@@ -16,8 +16,8 @@
         </ul>
         <h2>Cart</h2>
         <ul>
-            <li v-for="(item, key) in cart_list" v-if="item">{{ productList[key].name }}, x{{ item }}. 
-                Total: ${{ productList[key].price * item}} 
+            <li v-for="(item, key) in cart_list" v-if="item">{{ productList[key].name }}, x{{ item.count }}. 
+                Total: ${{ productList[key].price * item.count}} 
                 <button type="button" @click='removeFromCart(key)'>Remove</button>
             </li>
         </ul>
@@ -42,14 +42,15 @@
                         name: 'product 3',
                         price: 230
                     }],
-                cart_list: JSON.parse(localStorage.cart || '{}'),
+                cart_list: JSON.parse(localStorage.cart || '[]'),
             },
             computed: {
                 total: function() {
                     var total = 0;
                     for (var i in this.cart_list) {
+						
                         var prod = this.productList[i];
-                        var count = this.cart_list[i];
+                        var count = this.cart_list[i].count;
                         total += prod.price * count;
                     }
                     return total;
@@ -57,18 +58,18 @@
             },
             methods: {
                 addToCart: function(key){
-                    if(void 0 === this.cart_list[key]){
-                        this.$set(this.cart_list, key, 1);
-                        //this.$set(this.total, this.productList.price);
-                    } else {
-                        this.cart_list[key]++;
-                    }
-                    this.saveCart();
-                    //console.log(this.cart_list[key]);
+				  var newItem = {
+					id: key,
+					count: 1
+				  }
+				
+				if (this.cart_list[key] == this.cart_list.id) this.cart_list.push(newItem);
+				else {this.cart_list[key].count++}
+                this.saveCart();
+
                 },
                 removeFromCart: function(key){
                     this.$delete(this.cart_list, key);
-                    //delete this.cart_list[key];
                     this.saveCart();
                 },
                 saveCart: function(){
