@@ -1,0 +1,13 @@
+
+<ul>
+    
+    <li *ngFor="let item of cart; let i = index;">
+      {{item.name}} - $ {{item.price}}  X {{item.count}} Total $ {{item.price * item.count}} <button (click)="remove(i)">Remove</button>
+
+     
+      
+    </li>
+  </ul>
+  
+  {{ count }} - total <br>
+    {{ amount }}$ - amount
